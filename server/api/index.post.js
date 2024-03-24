@@ -1,4 +1,5 @@
 import * as pdfjs from "pdfjs-dist/build/pdf";
+import { getPromptComplete } from "../utils/ai";
 export default defineEventHandler(async (event) => {
   try {
     const file = await readMultipartFormData(event);
@@ -19,7 +20,8 @@ export default defineEventHandler(async (event) => {
         text += pageText.items.map((item) => item.str).join(" ") + "\n";
       }
     });
-    return text.trim();
+    const res = await getPromptComplete(text);
+    return res;
   } catch {
     return createError({
       statusCode: 500,
