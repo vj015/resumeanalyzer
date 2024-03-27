@@ -1,14 +1,14 @@
 <template>
-  <div class="flex flex-col items-center mt-32 ml-5 mr-5">
+  <div class="flex flex-col items-center mt-20 sm:mt-32 ml-5 mr-5">
     <div
       class="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center dark:text-white"
     >
       {{
         "Unleash Your Resume and Code Quality: Dive into the Cutting-Edge Capabilities of OpenAI with"
       }}
-      <span class="font-mono font-medium text-sky-500 dark:text-sky-400">{{
-        "ResumeGPT"
-      }}</span>
+      <span class="font-mono font-medium text-sky-500 dark:text-sky-400">
+        {{ resumeGPT ? `ResumeGPT` : `CodeGPT` }}</span
+      >
     </div>
     <p
       class="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400"
@@ -19,11 +19,21 @@
     </p>
 
     <div class="mt-10">
-      <input
-        type="file"
-        class="file-input file-input-bordered file-input-primary md:w-5/6 w-11/12 cursor-pointer font-mono font-medium text-sky-500 dark:text-sky-400"
-        accept="application/pdf"
-      />
+      <resumeInput v-if="resumeGPT" />
+      <codeInput v-else />
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: ["resumeGPT"],
+  mounted() {
+    console.log(this.resumeGPT);
+  },
+  watch: {
+    resumeGPT(newValue) {
+      console.log("new Value is ", newValue);
+    },
+  },
+};
+</script>
