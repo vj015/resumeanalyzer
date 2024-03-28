@@ -18,7 +18,7 @@
       }}
     </p>
 
-    <div class="mt-10 w-7/12 m-auto">
+    <div class="mt-10 w-full md:w-7/12 m-auto">
       <resumeInput v-if="resumeGPT" />
       <codeInput v-else />
     </div>
@@ -27,13 +27,5 @@
 <script>
 export default {
   props: ["resumeGPT"],
-  mounted() {
-    console.log(this.resumeGPT);
-  },
-  watch: {
-    resumeGPT(newValue) {
-      console.log("new Value is ", newValue);
-    },
-  },
 };
 </script>
