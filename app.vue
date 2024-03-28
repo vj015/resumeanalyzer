@@ -1,10 +1,5 @@
 <template>
   <div class="relative">
-    <img
-      class="w-full h-screen bg-cover bg-repeat"
-      src="assets/images/bg-main.jpg"
-      alt="Main Bg"
-    />
     <div class="absolute top-0 right-0">
       <button
         class="font-mono font-medium text-sky-500 dark:text-sky-400 border-sky-500 border-2 rounded mt-5 mr-8 p-2"

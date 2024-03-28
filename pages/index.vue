@@ -18,7 +18,7 @@
       }}
     </p>
 
-    <div class="mt-10">
+    <div class="mt-10 w-7/12 m-auto">
       <resumeInput v-if="resumeGPT" />
       <codeInput v-else />
     </div>
