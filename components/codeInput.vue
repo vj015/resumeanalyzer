@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="hidden">
+    <div>
       <div class="relative w-full flex flex-col">
         <div class="flex-none border-b border-green-950">
           <div class="flex items-center h-8 space-x-1.5 px-3">
@@ -25,7 +25,7 @@
         {{ "Optimize Code" }}
       </button>
     </div>
-    <div class="relative md:w-full mt-5">
+    <div class="relative md:w-full mt-5 mb-20">
       <div
         class="absolute -inset-2 rounded-lg bg-[conic-gradient(var(--tw-gradient-stops))] from-cyan-600 via-emerald-600 to-slate-600 opacity-50 blur-2xl"
       ></div>
@@ -37,9 +37,12 @@
             >
               {{ "Here is the code" }}
             </h2>
-            <div class="text-white text-2xl">
-              {{ "text" }}
-            </div>
+            <button
+              class="text-white text-2xl cursor-pointer opacity-55"
+              @click="logClicked()"
+            >
+              {{ isCopied ? `&#9989;` : `&#x1F4CB;` }}
+            </button>
           </div>
           <div
             class="text-sm md:text-base text-slate-300 text-justify ml-2 mt-2"
@@ -60,7 +63,26 @@ export default {
   data() {
     return {
       val: "//Paste your code here",
+      isCopied: false,
     };
+  },
+  methods: {
+    logClicked(e) {
+      try {
+        var str = document.getElementById("codeToCopy").innerHTML;
+        const el = document.createElement("textarea");
+        el.value = str;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        this.isCopied = true;
+      } catch (error) {
+        console.log("Inside from try catch err");
+        console.log(error);
+        this.isCopied = false;
+      }
+    },
   },
 };
 </script>
