@@ -78,7 +78,9 @@
 </template>
 <script>
 export default {
-  data() {},
+  data() {
+    return {};
+  },
   props: [
     "name",
     "nameText",
