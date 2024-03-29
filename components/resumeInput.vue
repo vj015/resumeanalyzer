@@ -51,21 +51,26 @@ export default {
       }
     },
     async triggerEndpoint() {
-      console.log("Endpoint triggering");
-      const formData = new FormData();
-      formData.append("resume", this.$refs.fileatt.files[0]);
-      this.$emit("showloader", true);
-      const res = await useFetch("/api", {
-        method: "POST",
-        body: formData,
-      }).catch(console.error);
-      console.log(res);
-      if (res.pending.value === false) {
-        this.$emit("showloader", false);
-        this.flagMark = false;
-        document.getElementById(
-          "result"
-        ).innerHTML = `<div> ${res.data.value.message.content} </div>`;
+      try {
+        console.log("Endpoint triggering");
+        const formData = new FormData();
+        formData.append("resume", this.$refs.fileatt.files[0]);
+        this.$emit("showloader", true);
+        const res = await useFetch("/api", {
+          method: "POST",
+          body: formData,
+        });
+        console.log(res);
+        if (res.pending.value === false) {
+          this.$emit("showloader", false);
+          this.flagMark = false;
+          document.getElementById(
+            "result"
+          ).innerHTML = `<div> ${res.data.value.message.content} </div>`;
+        }
+      } catch (error) {
+        console.log(error);
+        console.log("Error from triggerendpoint func");
       }
     },
     // prepareResult(response) {

@@ -23,6 +23,7 @@ export const getPromptComplete = async (msg) => {
       max_tokens: 800,
       temperature: 0.5,
     });
+    console.log(completion);
     return completion.choices[0];
   } catch (error) {
     console.error("Error from API:", error);
