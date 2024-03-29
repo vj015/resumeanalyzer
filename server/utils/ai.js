@@ -5,6 +5,9 @@ const openai = new OpenAI({
 
 export const getPromptComplete = async (msg) => {
   try {
+    console.log(msg);
+    console.log("Message inside getPromptComplete fn");
+    console.log(apikey);
     let prompArray = [
       {
         role: "system",
