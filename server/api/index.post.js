@@ -1,4 +1,4 @@
-import * as pdfjs from "pdfjs-dist/build/pdf";
+import * as PDFJS from "pdfjs-dist/build/pdf.min.mjs";
 import { getPromptComplete } from "../utils/ai";
 export default defineEventHandler(async (event) => {
   try {
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
       });
     }
     let text = "";
-    await pdfjs.getDocument(uint8ArrayData).promise.then(async (res) => {
+    await PDFJS.getDocument(uint8ArrayData).promise.then(async (res) => {
       const numPages = res.numPages;
       for (let i = 1; i <= numPages; i++) {
         const page = await res.getPage(i);
