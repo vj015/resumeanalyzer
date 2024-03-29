@@ -6,10 +6,11 @@
     >
       {{ resumeGPT ? `CodeGPT` : `ResumeGPT` }}
     </button>
-    <NuxtPage :resumeGPT="resumeGPT" />
+    <NuxtPage @showloader="showloader" :resumeGPT="resumeGPT" />
   </div>
   <div
-    class="absolute text-white left-1/4 sm:left-1/3 md:left-1/2 top-1/2 flex flex-col items-center justify-center hidden"
+    class="absolute text-white left-1/4 sm:left-1/3 md:left-1/2 top-1/2 flex flex-col items-center justify-center"
+    v-if="loading"
   >
     <Loader />
   </div>
@@ -19,11 +20,15 @@ export default {
   data() {
     return {
       resumeGPT: true,
+      loading: false,
     };
   },
   methods: {
     enablecodeGPT() {
       this.resumeGPT = !this.resumeGPT;
+    },
+    showloader(val) {
+      this.loading = val;
     },
   },
 };

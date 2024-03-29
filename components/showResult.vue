@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-col justify-start items-start p-3 mb-5">
       <h1 class="text-2xl md:text-4xl font-mono text-sky-500 dark:text-sky-400">
-        {{ name }}
+        {{ "Overview" }}
       </h1>
       <p class="text-sm md:text-base text-slate-300">
         {{ nameText }}
@@ -20,7 +20,7 @@
             <h2
               class="text-xl md:text-2xl font-mono bg-gradient-to-r from-green-500 via-teal-500 to-green-500 text-transparent bg-clip-text sticky top-3 z-10 backdrop-blur-md rounded-lg p-1 -mt-4"
             >
-              {{ positives }}
+              {{ "Positives" }}
             </h2>
             <p
               class="text-sm md:text-base text-slate-300 text-justify ml-2 mt-2"
@@ -40,7 +40,7 @@
             <h2
               class="text-xl md:text-2xl font-mono bg-gradient-to-r from-red-500 via-orange-500 to-red-500 text-transparent bg-clip-text sticky top-3 z-10 backdrop-blur-md rounded-lg p-1 -mt-4"
             >
-              {{ negatives }}
+              {{ "Negatives" }}
             </h2>
             <p
               class="text-sm md:text-base text-slate-300 text-justify ml-2 mt-2"
@@ -65,9 +65,7 @@
             <p
               class="text-sm md:text-base text-slate-300 text-justify ml-2 mt-2"
             >
-              {{
-                "Dolore gubergren justo aliquyam stet rebum sea accusam aliquyam nonumy et. Ipsum est sanctus et rebum. Lorem clita elitr dolor et diam. Sanctus sadipscing dolore consetetur dolor eos et voluptua sit, sea aliquyam accusam amet est nonumy vero sea, dolor et sed justo ea sadipscing sed ipsum aliquyam amet, clita amet rebum nonumy rebum dolor, eirmod ut sadipscing et dolores sed accusam dolor, sadipscing tempor et et dolor takimata sit,."
-              }}
+              {{ improvementsText }}
             </p>
             <div class="card-actions justify-end"></div>
           </div>
@@ -81,15 +79,6 @@ export default {
   data() {
     return {};
   },
-  props: [
-    "name",
-    "nameText",
-    "positives",
-    "positivesText",
-    "negatives",
-    "negativesText",
-    "improvements",
-    "improvementsText",
-  ],
+  props: ["nameText", "positivesText", "negativesText", "improvementsText"],
 };
 </script>
