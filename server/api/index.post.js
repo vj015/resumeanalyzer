@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
       });
     }
     let text = "";
+    await import("pdfjs-dist/build/pdf.worker.mjs");
     await PDFJS.getDocument(uint8ArrayData).promise.then(async (res) => {
       const numPages = res.numPages;
       for (let i = 1; i <= numPages; i++) {
