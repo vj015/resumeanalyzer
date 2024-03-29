@@ -9,7 +9,11 @@ export default {
     "./error.vue",
   ],
   theme: {
-    extend: {},
+    inset: {
+      "1/2": "43%",
+      "1/3": "35%",
+      "1/4": "18%",
+    },
   },
   plugins: [],
 };
