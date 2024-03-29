@@ -22,10 +22,12 @@ export default defineEventHandler(async (event) => {
     });
     const res = await getPromptComplete(text);
     return res;
-  } catch {
+  } catch (error) {
+    console.log("inside post call");
+    console.log(error);
     return createError({
       statusCode: 500,
-      statusMessage: "Something went wrong",
+      statusMessage: `Something went wrong ${error}`,
     });
   }
 });
