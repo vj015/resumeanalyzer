@@ -69,18 +69,14 @@ export default {
   },
   methods: {
     analyzecode() {
-      console.log("inside analyze code");
-      console.log(this.val);
       if (this.val.trim().length === 0) {
         console.log("Code Not Found");
       } else {
-        console.log("Triggering Api call to analyze code");
         this.triggerEndpoint();
       }
     },
     async triggerEndpoint() {
       try {
-        console.log("Endpoint triggering to optimize code");
         this.$emit("showloader", true);
         const res = await useFetch("/api/code", {
           method: "POST",
@@ -88,17 +84,14 @@ export default {
             code: this.val,
           },
         });
-        console.log(res);
         if (res.pending.value === false) {
           this.$emit("showloader", false);
           this.flagMark = false;
-          console.log(res.data.value.message.content);
           document.getElementById("codeToCopy").innerHTML =
             res.data.value.message.content;
         }
       } catch (error) {
         console.log(error);
-        console.log("Error from triggerendpoint func");
       }
     },
     logClicked(e) {
@@ -112,8 +105,6 @@ export default {
         document.body.removeChild(el);
         this.isCopied = true;
       } catch (error) {
-        console.log("Inside from try catch err");
-        console.log(error);
         this.isCopied = false;
       }
     },

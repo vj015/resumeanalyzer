@@ -9,7 +9,6 @@
       />
       <input
         type="text"
-        :value="jd"
         placeholder="Job Discription(Optional)"
         class="bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 text-white font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center mt-5"
       />
@@ -21,23 +20,12 @@
       </button>
     </div>
     <div id="result" class="text-white font-mono text-2xl"></div>
-    <!-- <showResult
-      :nameText="nameText"
-      :positivesText="positivesText"
-      :negativesText="negativesText"
-      :improvementsText="improvementsText"
-    /> -->
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      // nameText: "",
-      // positivesText: "",
-      // negativesText: "",
-      // improvementsText: "",
-      jd: "",
       flagMark: true,
     };
   },
@@ -46,13 +34,11 @@ export default {
       if (this.$refs.fileatt.files[0] === undefined) {
         console.log("File Not Found");
       } else {
-        console.log("Processing ....");
         this.triggerEndpoint();
       }
     },
     async triggerEndpoint() {
       try {
-        console.log("Endpoint triggering");
         const formData = new FormData();
         formData.append("resume", this.$refs.fileatt.files[0]);
         this.$emit("showloader", true);
@@ -60,7 +46,6 @@ export default {
           method: "POST",
           body: formData,
         });
-        console.log(res);
         if (res.pending.value === false) {
           this.$emit("showloader", false);
           this.flagMark = false;
@@ -70,43 +55,8 @@ export default {
         }
       } catch (error) {
         console.log(error);
-        console.log("Error from triggerendpoint func");
       }
     },
-    // prepareResult(response) {
-    //   const pattern = /([^\n:]+):([\s\S]*?)(?=\n[A-Z]|$)/g;
-
-    //   // Define an object to hold the parsed data
-    //   const parsedData = {};
-
-    //   // Match the pattern in the response and extract the headings and content
-    //   let match;
-    //   while ((match = pattern.exec(response)) !== null) {
-    //     const heading = match[1].trim();
-    //     const content = match[2].trim();
-    //     parsedData[heading] = content
-    //       .split("\n")
-    //       .map((line) => line.trim())
-    //       .filter((line) => line !== "");
-    //   }
-
-    //   // Log the parsed data
-    //   console.log(parsedData);
-    //   this.nameText = this.getAllData(parsedData["Overview"]);
-    //   this.positivesText = this.getAllData(parsedData["Positives"]);
-    //   this.negativesText = this.getAllData(parsedData["Negatives"]);
-    //   this.improvementsText = this.getAllData(parsedData["Enhancements"]);
-    // },
-    // getAllData(arr) {
-    //   let allText = "";
-    //   if (Array.isArray(arr) === false) {
-    //     return arr;
-    //   }
-    //   arr.forEach((text) => {
-    //     allText += text + " ";
-    //   });
-    //   return allText;
-    // },
   },
 };
 </script>

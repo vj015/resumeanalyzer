@@ -5,8 +5,6 @@ const openai = new OpenAI({
 
 export const getPromptComplete = async (msg) => {
   try {
-    console.log(msg);
-    console.log("Message inside getPromptComplete fn");
     let prompArray = [
       {
         role: "system",
@@ -25,7 +23,6 @@ export const getPromptComplete = async (msg) => {
       max_tokens: 800,
       temperature: 0.5,
     });
-    console.log(completion);
     return completion.choices[0];
   } catch (error) {
     console.error("Error from API:", error);
@@ -35,8 +32,6 @@ export const getPromptComplete = async (msg) => {
 
 export const getPromptCompleteForCode = async (msg) => {
   try {
-    console.log(msg);
-    console.log("Message inside getPromptComplete fn");
     let prompArray = [
       {
         role: "system",
@@ -55,7 +50,6 @@ export const getPromptCompleteForCode = async (msg) => {
       max_tokens: 800,
       temperature: 0.5,
     });
-    console.log(completion);
     return completion.choices[0];
   } catch (error) {
     console.error("Error from API:", error);

@@ -11,8 +11,6 @@ export default defineEventHandler(async (event) => {
     const res = await getPromptCompleteForCode(body.code);
     return res;
   } catch (error) {
-    console.log("inside post call");
-    console.log(error);
     return createError({
       statusCode: 500,
       statusMessage: `Something went wrong ${error}`,

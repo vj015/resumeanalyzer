@@ -25,7 +25,6 @@ export default {
   props: ["message"],
   methods: {
     reload1() {
-      console.log("reload app");
       window.location.reload();
     },
   },
