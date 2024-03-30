@@ -32,3 +32,33 @@ export const getPromptComplete = async (msg) => {
     throw error;
   }
 };
+
+export const getPromptCompleteForCode = async (msg) => {
+  try {
+    console.log(msg);
+    console.log("Message inside getPromptComplete fn");
+    let prompArray = [
+      {
+        role: "system",
+        content:
+          "You are an efficient coder designed to optimize code. Provide only optimize, clean and bug fixed code in response to inputted code.Please provide optimization and bug fixing for code provided by user: Please only provide code as result and skip its explanation",
+      },
+    ];
+    const obj = {
+      role: "user",
+      content: `${msg}`,
+    };
+    prompArray.push(obj);
+    const completion = await openai.chat.completions.create({
+      messages: prompArray,
+      model: "gpt-3.5-turbo",
+      max_tokens: 800,
+      temperature: 0.5,
+    });
+    console.log(completion);
+    return completion.choices[0];
+  } catch (error) {
+    console.error("Error from API:", error);
+    throw error;
+  }
+};

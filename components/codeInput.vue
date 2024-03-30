@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div v-if="flagMark">
       <div class="relative w-full flex flex-col">
         <div class="flex-none border-b border-green-950">
           <div class="flex items-center h-8 space-x-1.5 px-3">
@@ -13,7 +13,7 @@
           <div class="w-full flex-auto flex min-h-0 overflow-auto">
             <div class="w-full relative flex-auto">
               <pre class="flex min-h-full text-sm leading-6">
-              <textarea class="flex-auto relative block text-green-950 pt-4 pb-4 px-4 overflow-auto" :value="val" />
+              <textarea class="flex-auto relative block text-green-950 pt-4 pb-4 px-4 overflow-auto" v-model="val" placeholder="//Please paste your code here"></textarea>
             </pre>
             </div>
           </div>
@@ -21,6 +21,7 @@
       </div>
       <button
         class="bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 text-white font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400"
+        @click="analyzecode()"
       >
         {{ "Optimize Code" }}
       </button>
@@ -29,7 +30,10 @@
       <div
         class="absolute -inset-2 rounded-lg bg-[conic-gradient(var(--tw-gradient-stops))] from-cyan-600 via-emerald-600 to-slate-600 opacity-50 blur-2xl"
       ></div>
-      <div class="card w-full bg-base-100 shadow-xl md:w-100">
+      <div
+        class="card w-full bg-base-100 shadow-xl md:w-100"
+        v-show="!flagMark"
+      >
         <div class="card-body">
           <div class="flex flex-row justify-between">
             <h2
@@ -45,13 +49,9 @@
             </button>
           </div>
           <div
-            class="text-sm md:text-base text-slate-300 text-justify ml-2 mt-2"
+            class="text-sm md:text-base text-justify ml-2 mt-2 text-white"
             id="codeToCopy"
-          >
-            {{
-              "Sanctus nonumy et justo erat et vero amet, clita sed diam duo dolor diam sea. Stet sed sed et elitr eos, gubergren kasd takimata accusam magna et et diam diam diam. Nonumy stet tempor tempor et et. No clita nonumy et et amet dolore gubergren. Voluptua lorem dolor sed dolore accusam, aliquyam dolores ipsum et labore no, et clita elitr vero sanctus eos est kasd, diam tempor eos clita at. Magna sit gubergren lorem sed. Amet sed magna erat duo ipsum vero. Magna duo dolor diam ea dolore. Kasd magna ipsum ipsum sanctus vero elitr sed lorem stet, ea justo rebum stet erat dolore tempor elitr, magna et erat consetetur rebum clita ipsum amet kasd, eirmod ut no ea sed aliquyam sit ipsum takimata, et sit rebum ut ea tempor, tempor ut tempor clita ut. Kasd dolore magna ea duo sanctus aliquyam aliquyam ipsum, lorem ut erat clita sadipscing amet stet invidunt diam at. Nonumy est dolores eos voluptua sit sit erat duo justo. Clita dolor no sanctus dolor et, dolor ut sanctus magna sanctus sit, amet tempor diam takimata nonumy. Ut et nonumy sit lorem est stet, clita dolor tempor ipsum tempor rebum, duo amet et eirmod et dolores."
-            }}
-          </div>
+          ></div>
           <div class="card-actions justify-end"></div>
         </div>
       </div>
@@ -62,11 +62,45 @@
 export default {
   data() {
     return {
-      val: "//Paste your code here",
+      val: "",
       isCopied: false,
+      flagMark: true,
     };
   },
   methods: {
+    analyzecode() {
+      console.log("inside analyze code");
+      console.log(this.val);
+      if (this.val.trim().length === 0) {
+        console.log("Code Not Found");
+      } else {
+        console.log("Triggering Api call to analyze code");
+        this.triggerEndpoint();
+      }
+    },
+    async triggerEndpoint() {
+      try {
+        console.log("Endpoint triggering to optimize code");
+        this.$emit("showloader", true);
+        const res = await useFetch("/api/code", {
+          method: "POST",
+          body: {
+            code: this.val,
+          },
+        });
+        console.log(res);
+        if (res.pending.value === false) {
+          this.$emit("showloader", false);
+          this.flagMark = false;
+          console.log(res.data.value.message.content);
+          document.getElementById("codeToCopy").innerHTML =
+            res.data.value.message.content;
+        }
+      } catch (error) {
+        console.log(error);
+        console.log("Error from triggerendpoint func");
+      }
+    },
     logClicked(e) {
       try {
         var str = document.getElementById("codeToCopy").innerHTML;
