@@ -20,7 +20,7 @@
 
     <div class="mt-10 w-full md:w-7/12 m-auto">
       <resumeInput @showloader="showloader" v-if="resumeGPT" />
-      <codeInput v-else />
+      <codeInput @showloader="showloader" v-else />
     </div>
   </div>
 </template>
