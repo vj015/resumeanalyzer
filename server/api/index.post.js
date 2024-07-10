@@ -21,11 +21,8 @@ export default defineEventHandler(async (event) => {
         text += pageText.items.map((item) => item.str).join(" ") + "\n";
       }
     });
-    const res = await getPromptComplete(text);
-    return res;
+    return text;
   } catch (error) {
-    console.log("inside post call");
-    console.log(error);
     return createError({
       statusCode: 500,
       statusMessage: `Something went wrong ${error}`,

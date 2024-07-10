@@ -14,7 +14,15 @@
       />
       <button
         class="bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 text-white font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400 mt-5"
+        @click="upload()"
+        v-if="text.length === 0"
+      >
+        {{ "Upload Resume " }}
+      </button>
+      <button
+        class="bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 text-white font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400 mt-5"
         @click="analyze()"
+        v-if="text.length != 0"
       >
         {{ "Analyze Resume " }}
       </button>
@@ -27,17 +35,18 @@ export default {
   data() {
     return {
       flagMark: true,
+      text: "",
     };
   },
   methods: {
-    analyze() {
+    upload() {
       if (this.$refs.fileatt.files[0] === undefined) {
         console.log("File Not Found");
       } else {
-        this.triggerEndpoint();
+        this.triggerUploadEndpoint();
       }
     },
-    async triggerEndpoint() {
+    async triggerUploadEndpoint() {
       try {
         const formData = new FormData();
         formData.append("resume", this.$refs.fileatt.files[0]);
@@ -46,15 +55,37 @@ export default {
           method: "POST",
           body: formData,
         });
+        console.log(res);
         if (res.pending.value === false) {
           this.$emit("showloader", false);
-          this.flagMark = false;
-          document.getElementById(
-            "result"
-          ).innerHTML = `<div> ${res.data.value.message.content} </div>`;
+          this.text = res.data.value;
         }
       } catch (error) {
         console.log(error);
+      }
+    },
+    async analyze() {
+      if (this.text.length <= 0) {
+        console.log("File Not Found");
+      } else {
+        try {
+          this.$emit("showloader", true);
+          const res = await useFetch("/api/analyze", {
+            method: "POST",
+            body: {
+              code: this.text,
+            },
+          });
+          if (res.pending.value === false) {
+            this.$emit("showloader", false);
+            this.flagMark = false;
+            document.getElementById(
+              "result"
+            ).innerHTML = `<div> ${res.data.value.message.content} </div>`;
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
   },
