@@ -1,7 +1,7 @@
 import { OpenAI } from "openai";
 const openai = new OpenAI({
   apiKey: process.env.NUXT_OPEN_AI_SECRET_KEY,
-  baseURL: "https://api.pawan.krd/cosmosrp/v1",
+  baseURL: "https://api.pawan.krd/pai-001/v1",
 });
 
 export const getPromptComplete = async (msg) => {
