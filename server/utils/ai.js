@@ -1,6 +1,7 @@
 import { OpenAI } from "openai";
 const openai = new OpenAI({
   apiKey: process.env.NUXT_OPEN_AI_SECRET_KEY,
+  baseURL: "https://api.pawan.krd/cosmosrp/v1",
 });
 
 export const getPromptComplete = async (msg) => {
@@ -19,9 +20,6 @@ export const getPromptComplete = async (msg) => {
     prompArray.push(obj);
     const completion = await openai.chat.completions.create({
       messages: prompArray,
-      model: "gpt-3.5-turbo",
-      max_tokens: 800,
-      temperature: 0.5,
     });
     return completion.choices[0];
   } catch (error) {
@@ -46,9 +44,6 @@ export const getPromptCompleteForCode = async (msg) => {
     prompArray.push(obj);
     const completion = await openai.chat.completions.create({
       messages: prompArray,
-      model: "gpt-3.5-turbo",
-      max_tokens: 800,
-      temperature: 0.5,
     });
     return completion.choices[0];
   } catch (error) {

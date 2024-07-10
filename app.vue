@@ -1,12 +1,10 @@
 <template>
   <div
-    class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+    class="bg-orange-100 text-orange-700 p-4"
   >
-    <p class="font-bold underline">Error!</p>
-    <p>
-      API Quota of Openai keys have expired! Please reach
-      <span class="font-extrabold"><a href="https://vipuljain.in/">Vipul</a></span> to view the recorded demo of
-      this application!
+    <p class="font-bold underline font-serif">Announcement<img class="inline-block" src="/mic.png"></p>
+    <p class="font-semibold font-serif">
+      API Quota of OpenAI keys have expired! We are using CosmoRP model which takes some time for processing! So Please be informed.
     </p>
   </div>
   <div class="relative flex flex-col items-center md:items-end mb-3">
