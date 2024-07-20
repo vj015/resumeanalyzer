@@ -4,7 +4,7 @@
   >
     <p class="font-bold underline font-serif">Announcement<img class="inline-block" src="/mic.png"></p>
     <p class="font-semibold font-serif">
-      API Quota of OpenAI keys have expired! We are using CosmoRP model which takes some time for processing! So Please be informed.
+      API Quota of OpenAI keys have expired! We are using CosmoRP model which takes much time for processing especially getting timeouts in Free hosting services like vercel! So Please be informed and is requested to try it on local. Contact for more.
     </p>
   </div>
   <div class="relative flex flex-col items-center md:items-end mb-3">

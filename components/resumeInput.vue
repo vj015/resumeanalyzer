@@ -27,7 +27,23 @@
         {{ "Analyze Resume " }}
       </button>
     </div>
-    <div id="result" class="text-white font-mono text-2xl"></div>
+    <div
+      class="flex flex-col flex-wrap md:flex-row items-center justify-center"
+      v-show="showRes"
+    >
+      <div
+        id="resultpositive"
+        class="text-green-600 font-mono text-2xl m-2 p-2 border-2 border-green-600"
+      ></div>
+      <div
+        id="resultnegative"
+        class="text-red-600 font-mono text-2xl m-2 border-2 border-red-600 p-2"
+      ></div>
+      <div
+        id="resultsuggestion"
+        class="text-yellow-500 font-mono text-2xl m-2 border-2 border-yellow-500 p-2"
+      ></div>
+    </div>
   </div>
 </template>
 <script>
@@ -36,6 +52,7 @@ export default {
     return {
       flagMark: true,
       text: "",
+      showRes: false,
     };
   },
   methods: {
@@ -55,7 +72,6 @@ export default {
           method: "POST",
           body: formData,
         });
-        console.log(res);
         if (res.pending.value === false) {
           this.$emit("showloader", false);
           this.text = res.data.value;
@@ -79,9 +95,16 @@ export default {
           if (res.pending.value === false) {
             this.$emit("showloader", false);
             this.flagMark = false;
+            this.showRes = true;
             document.getElementById(
-              "result"
-            ).innerHTML = `<div> ${res.data.value.message.content} </div>`;
+              "resultpositive"
+            ).innerText = `${res.data.value[0].message.content}`;
+            document.getElementById(
+              "resultnegative"
+            ).innerText = `${res.data.value[1].message.content}`;
+            document.getElementById(
+              "resultsuggestion"
+            ).innerText = `${res.data.value[2].message.content}`;
           }
         } catch (error) {
           console.log(error);

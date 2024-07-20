@@ -8,11 +8,19 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Resume not found",
       });
     }
-    const res = await getPromptComplete(
+    const resPositives = await getPromptComplete(
       body.code,
-      "You are an analytical tool designed to produce a comprehensive assessment of potential hires, including their strengths, weaknesses, and recommendations. Provide a response comprising four sub-results: a brief overview of the individual under subheading overview, positives observed in their resume under subheading positives, negatives identified in their resume under subheading negatives, and suggestions for enhancing their resume under subheading enhancements. Please style these four sections with tailwind css classes, ensure no color class of tailwind is used in font and background both and also make them responsive, which I will directly render your output in a div in javascript. Please provide analysis for resume provided by user:"
+      "You are an analytical tool designed to produce a comprehensive assessment of strength of potential hires. Provide a response comprising : a brief overview of the positives observed in their resume. Please provide raw text only with no styling. Please provide analysis for resume provided by user:"
     );
-    return res;
+    const resNegatives = await getPromptComplete(
+      body.code,
+      "You are an analytical tool designed to produce a comprehensive assessment of negatives of potential hires. Provide a response comprising : a brief overview of the negatives observed in their resume. Please provide raw text only with no styling. Please provide analysis for resume provided by user:"
+    );
+    const resSuggestions = await getPromptComplete(
+      body.code,
+      "You are an analytical tool designed to produce a comprehensive assessment of improvements of potential hires. Provide a response comprising : a brief overview of the suggestions or improvements for their resume. Please provide raw text only with no styling. Please provide analysis for resume provided by user:"
+    );
+    return Promise.all([resPositives, resNegatives, resSuggestions]);
   } catch (error) {
     return createError({
       statusCode: 500,
