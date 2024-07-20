@@ -1,4 +1,4 @@
-import { getPromptCompleteForCode } from "../utils/ai";
+import { getPromptComplete } from "../utils/ai";
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
@@ -8,7 +8,10 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Code not found",
       });
     }
-    const res = await getPromptCompleteForCode(body.code);
+    const res = await getPromptComplete(
+      body.code,
+      "You are an efficient coder designed to optimize code. Provide only optimize, clean and bug fixed code in response to inputted code.Please provide optimization and bug fixing for code provided by user: Please only provide code as result and skip its explanation"
+    );
     return res;
   } catch (error) {
     return createError({

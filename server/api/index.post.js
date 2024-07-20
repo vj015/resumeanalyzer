@@ -1,5 +1,4 @@
 import * as PDFJS from "pdfjs-dist/build/pdf.min.mjs";
-import { getPromptComplete } from "../utils/ai";
 export default defineEventHandler(async (event) => {
   try {
     const file = await readMultipartFormData(event);
